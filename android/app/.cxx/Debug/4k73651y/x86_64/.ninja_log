@@ -1,0 +1,19 @@
+# ninja log v5
+9	4209	1764232086763473076	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/States.cpp.o	a7f0b2f0e0fa57e6
+6	7481	1764232090009926839	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/common/cpp/react/renderer/components/safeareacontext/RNCSafeAreaViewState.cpp.o	fe483e078b2a822d
+0	31	0	clean	bd6c6ede7b2db994
+80	650	1764232920838026525	build.ninja	c6aca2500d09b595
+4210	8862	1764232091413806381	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/safeareacontextJSI-generated.cpp.o	5926bf8f9c72d176
+5	7953	1764232090483934323	CMakeFiles/appmodules.dir/OnLoad.cpp.o	88f2654d12e476e2
+7	5505	1764232088038442976	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp.o	50c96e42966806f1
+0	52	0	/Users/pradeep/ReactNative/mySchool/android/app/.cxx/Debug/4k73651y/x86_64/CMakeFiles/cmake.verify_globs	f600545644b58b0e
+12	6329	1764232088813925563	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/safeareacontext-generated.cpp.o	eed27705e65a3ae
+9	8000	1764232090549047792	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/ShadowNodes.cpp.o	522249f898c996c3
+8	8128	1764232090665684569	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/Props.cpp.o	5f5cfbe77491b059
+8862	9117	1764232091667268620	/Users/pradeep/ReactNative/mySchool/android/app/build/intermediates/cxx/Debug/4k73651y/obj/x86_64/libreact_codegen_safeareacontext.so	83de8e33f471b72d
+6	8568	1764232091111940746	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/common/cpp/react/renderer/components/safeareacontext/RNCSafeAreaViewShadowNode.cpp.o	2721623c1b61144c
+6	8635	1764232091177330625	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/ComponentDescriptors.cpp.o	cc264822c25aec6
+5	9199	1764232091739298688	CMakeFiles/appmodules.dir/Users/pradeep/ReactNative/mySchool/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o	865f8a7b0e1a2e78
+9200	9332	1764232091887279879	/Users/pradeep/ReactNative/mySchool/android/app/build/intermediates/cxx/Debug/4k73651y/obj/x86_64/libappmodules.so	5d24db2aaae6b55d
+0	48	0	/Users/pradeep/ReactNative/mySchool/android/app/.cxx/Debug/4k73651y/x86_64/CMakeFiles/cmake.verify_globs	f600545644b58b0e
+1	50	0	/Users/pradeep/ReactNative/mySchool/android/app/.cxx/Debug/4k73651y/x86_64/CMakeFiles/cmake.verify_globs	f600545644b58b0e

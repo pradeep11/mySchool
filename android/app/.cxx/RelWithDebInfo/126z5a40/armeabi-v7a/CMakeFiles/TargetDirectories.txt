@@ -1,0 +1,6 @@
+/Users/pradeep/ReactNative/mySchool/android/app/.cxx/RelWithDebInfo/126z5a40/armeabi-v7a/CMakeFiles/appmodules.dir
+/Users/pradeep/ReactNative/mySchool/android/app/.cxx/RelWithDebInfo/126z5a40/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/pradeep/ReactNative/mySchool/android/app/.cxx/RelWithDebInfo/126z5a40/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/pradeep/ReactNative/mySchool/android/app/.cxx/RelWithDebInfo/126z5a40/armeabi-v7a/safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir
+/Users/pradeep/ReactNative/mySchool/android/app/.cxx/RelWithDebInfo/126z5a40/armeabi-v7a/safeareacontext_autolinked_build/CMakeFiles/edit_cache.dir
+/Users/pradeep/ReactNative/mySchool/android/app/.cxx/RelWithDebInfo/126z5a40/armeabi-v7a/safeareacontext_autolinked_build/CMakeFiles/rebuild_cache.dir
