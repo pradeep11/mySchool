@@ -185,3 +185,6 @@ fix_*.patch
 **/build/
 *.apk
 *.aab
+
+# Android NDK / CMake generated files
+**/.cxx/
