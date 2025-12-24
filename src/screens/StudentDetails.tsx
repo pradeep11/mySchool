@@ -5,87 +5,166 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Dimensions,
   SafeAreaView,
   Modal,
   Pressable,
   useColorScheme,
+  Dimensions,
 } from 'react-native';
-import { useAppContext } from '../context/AppContext';
+import { useAppStore } from '../store/appStore';
 import { getTheme } from '../config/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { configService } from '../services/ConfigService';
 
-const StudentCard = ({ student, onPress }: { student: any; onPress: () => void }) => {
+const ItemCard = ({
+  item,
+  onPress,
+  vendorType,
+}: {
+  item: any;
+  onPress: () => void;
+  vendorType: string;
+}) => {
+  console.log('[ItemCard] Rendering item:', item);
+  const renderItemDetails = () => {
+    if (vendorType === 'school') {
+      return (
+        <>
+          <Text style={styles.itemName}>{item.name}</Text>
+          {item.parent && (
+            <Text style={styles.itemSubtitle}>{item.parent}</Text>
+          )}
+          <Text style={styles.itemMeta}>{`Class-Section: ${
+            item.classSection || ''
+          }`}</Text>
+          <Text style={styles.itemMeta}>{`Admission No: ${
+            item.admissionNo || ''
+          }`}</Text>
+        </>
+      );
+    } else if (vendorType === 'pharmacy') {
+      return (
+        <>
+          <Text style={styles.itemName}>{item.name}</Text>
+          <Text style={styles.itemSubtitle}>{item.category}</Text>
+          <Text style={styles.itemMeta}>{`Stock: ${item.stock}`}</Text>
+          <Text style={styles.itemMeta}>{`Price: ${item.price}`}</Text>
+          <Text style={styles.itemMeta}>{`Prescription: ${
+            item.prescription ? 'Required' : 'Not Required'
+          }`}</Text>
+        </>
+      );
+    }
+    return <Text style={styles.itemName}>{item.name}</Text>;
+  };
+
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
       <View style={styles.avatarPlaceholder}>
-        <Text style={{ fontSize: 28 }}>👦</Text>
+        <Text style={{ fontSize: 28 }}>
+          {vendorType === 'school'
+            ? '👦'
+            : vendorType === 'pharmacy'
+            ? '💊'
+            : '📦'}
+        </Text>
       </View>
-      <Text style={styles.studentName}>{student.name}</Text>
-      {student.parent ? (
-        <Text style={styles.studentSubtitle}>{student.parent}</Text>
-      ) : null}
-      <Text style={styles.studentMeta}>{`Class-Section: ${student.classSection || ''}`}</Text>
-      <Text style={styles.studentMeta}>{`Admission No: ${student.admissionNo || ''}`}</Text>
+      {renderItemDetails()}
     </TouchableOpacity>
   );
 };
 
 const StudentDetails: React.FC = () => {
-  const { students, navigate, selectStudent, selectedStudent } = useAppContext();
+  const { selectItem, selectedItem, toggleDrawer } = useAppStore();
   const [modalVisible, setModalVisible] = useState(false);
   const isDarkMode = useColorScheme() === 'dark';
   const theme = getTheme(isDarkMode);
   const insets = useSafeAreaInsets();
-  const screenWidth = Dimensions.get('window').width;
-  const itemWidth = (screenWidth - 48) / 2;
-
+  const vendorType = configService.getVendorType();
+  const detailsData = configService.getScreenData('details') as any;
+  console.log('[StudentDetails] Details Data:', detailsData);
+  const items = detailsData?.items || [];
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background, paddingBottom: insets.bottom }]}>
-      <View style={[styles.header, { backgroundColor: theme.colors.primary, paddingTop: insets.top + 12 }]}>
-        <TouchableOpacity onPress={() => navigate('home')} style={styles.hamburger}>
-          <Text style={{ fontSize: 20 }}>≡</Text>
+    <SafeAreaView
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.colors.background,
+          paddingBottom: insets.bottom,
+        },
+      ]}
+    >
+      <View
+        style={[
+          styles.header,
+          {
+            backgroundColor: theme.colors.primary,
+            paddingTop: insets.top + 12,
+          },
+        ]}
+      >
+        <TouchableOpacity onPress={toggleDrawer} style={styles.hamburger}>
+          <Text style={{ fontSize: 20 }}>☰</Text>
         </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.colors.surface }]}>Student Details</Text>
+        <Text style={[styles.title, { color: theme.colors.surface }]}>
+          {detailsData?.itemLabel || 'Details'}
+        </Text>
       </View>
 
       <View style={styles.illustrationContainer}>
-        <Text style={{ fontSize: 72 }}>👨‍👩‍👧‍👦</Text>
+        <Text style={{ fontSize: 72 }}>
+          {vendorType === 'school'
+            ? '👨‍👩‍👧‍👦'
+            : vendorType === 'pharmacy'
+            ? '💊'
+            : '📦'}
+        </Text>
       </View>
 
-      <View style={[styles.contentCard, { backgroundColor: theme.colors.surface }]}>
+      <View
+        style={[styles.contentCard, { backgroundColor: theme.colors.surface }]}
+      >
         <View style={styles.searchRow}>
-          <View style={[styles.searchBox, { backgroundColor: theme.colors.background }]}>
+          <View
+            style={[
+              styles.searchBox,
+              { backgroundColor: theme.colors.background },
+            ]}
+          >
             <Text style={{ fontSize: 18 }}>🔍</Text>
           </View>
-          <TouchableOpacity style={[styles.filterButton, { backgroundColor: theme.colors.background }]}>
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              { backgroundColor: theme.colors.background },
+            ]}
+          >
             <Text style={{ fontSize: 16 }}>☰</Text>
           </TouchableOpacity>
         </View>
 
-            <Text style={[styles.groupTitle, { color: theme.colors.text } ]}>Play Group A</Text>
+        <Text style={[styles.groupTitle, { color: theme.colors.text }]}>
+          {detailsData?.title || 'Items'}
+        </Text>
 
-            <FlatList
-          data={students}
-          keyExtractor={(it) => it.id}
+        <FlatList
+          data={items}
+          keyExtractor={item => item.id}
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
-              renderItem={({ item }) => (
-                <StudentCard
-                  student={item}
-                  onPress={() => {
-                    selectStudent(item);
-                    setModalVisible(true);
-                  }}
-                />
-              )}
+          renderItem={({ item }) => (
+            <ItemCard
+              item={item}
+              vendorType={vendorType}
+              onPress={() => {
+                selectItem(item);
+                setModalVisible(true);
+              }}
+            />
+          )}
           contentContainerStyle={{ paddingBottom: 80 + insets.bottom }}
         />
       </View>
-
-      <TouchableOpacity style={[styles.fab, { backgroundColor: theme.colors.primary, bottom: 18 + insets.bottom }]} onPress={() => {}}>
-        <Text style={{ fontSize: 18, color: theme.colors.surface }}>⬛⬛</Text>
-      </TouchableOpacity>
 
       {/* Student Detail Modal */}
       <Modal
@@ -95,30 +174,85 @@ const StudentDetails: React.FC = () => {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={[styles.modalContent, { backgroundColor: theme.colors.surface }]}>
-            <Text style={[styles.modalTitle, { color: theme.colors.text }]}>Student Details</Text>
-            {selectedStudent ? (
+          <View
+            style={[
+              styles.modalContent,
+              { backgroundColor: theme.colors.surface },
+            ]}
+          >
+            <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
+              {detailsData?.itemLabel || 'Item'} Details
+            </Text>
+            {selectedItem ? (
               <View style={{ marginTop: 12 }}>
-                <Text style={[styles.modalName, { color: theme.colors.text }]}>{selectedStudent.name}</Text>
-                {selectedStudent.parent ? (
-                  <Text style={[styles.modalText, { color: theme.colors.textSecondary }]}>{`Parent: ${selectedStudent.parent}`}</Text>
-                ) : null}
-                <Text style={[styles.modalText, { color: theme.colors.text }]}>{`Class-Section: ${selectedStudent.classSection || ''}`}</Text>
-                <Text style={[styles.modalText, { color: theme.colors.text }]}>{`Admission No: ${selectedStudent.admissionNo || ''}`}</Text>
+                <Text style={[styles.modalName, { color: theme.colors.text }]}>
+                  {selectedItem.name}
+                </Text>
+                {vendorType === 'school' && (
+                  <>
+                    {selectedItem.parent && (
+                      <Text
+                        style={[
+                          styles.modalText,
+                          { color: theme.colors.textSecondary },
+                        ]}
+                      >{`Parent: ${selectedItem.parent}`}</Text>
+                    )}
+                    <Text
+                      style={[styles.modalText, { color: theme.colors.text }]}
+                    >{`Class-Section: ${
+                      selectedItem.classSection || ''
+                    }`}</Text>
+                    <Text
+                      style={[styles.modalText, { color: theme.colors.text }]}
+                    >{`Admission No: ${selectedItem.admissionNo || ''}`}</Text>
+                  </>
+                )}
+                {vendorType === 'pharmacy' && (
+                  <>
+                    <Text
+                      style={[
+                        styles.modalText,
+                        { color: theme.colors.textSecondary },
+                      ]}
+                    >{`Category: ${selectedItem.category}`}</Text>
+                    <Text
+                      style={[styles.modalText, { color: theme.colors.text }]}
+                    >{`Stock: ${selectedItem.stock}`}</Text>
+                    <Text
+                      style={[styles.modalText, { color: theme.colors.text }]}
+                    >{`Price: ${selectedItem.price}`}</Text>
+                    <Text
+                      style={[styles.modalText, { color: theme.colors.text }]}
+                    >
+                      {`Prescription: ${
+                        selectedItem.prescription ? 'Required' : 'Not Required'
+                      }`}
+                    </Text>
+                  </>
+                )}
               </View>
             ) : (
-              <Text style={[styles.modalText, { color: theme.colors.text }]}>No student selected</Text>
+              <Text style={[styles.modalText, { color: theme.colors.text }]}>
+                No item selected
+              </Text>
             )}
 
             <View style={styles.modalActions}>
               <Pressable
-                style={[styles.modalButton, { backgroundColor: theme.colors.primary }]}
+                style={[
+                  styles.modalButton,
+                  { backgroundColor: theme.colors.primary },
+                ]}
                 onPress={() => setModalVisible(false)}
               >
                 <Text style={{ color: theme.colors.surface }}>Close</Text>
               </Pressable>
               <Pressable
-                style={[styles.modalButton, { backgroundColor: theme.colors.success ?? '#4CAF50' }]}
+                style={[
+                  styles.modalButton,
+                  { backgroundColor: theme.colors.success ?? '#4CAF50' },
+                ]}
                 onPress={() => {
                   // placeholder for more action
                   setModalVisible(false);
@@ -157,7 +291,11 @@ const styles = StyleSheet.create({
     padding: 12,
     flex: 1,
   },
-  searchRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
+  searchRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
   searchBox: {
     flex: 1,
     height: 44,
@@ -176,7 +314,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  groupTitle: { fontSize: 16, fontWeight: '600', marginBottom: 12, textAlign: 'center' },
+  groupTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
   columnWrapper: { justifyContent: 'space-between', marginBottom: 12 },
   card: {
     backgroundColor: '#fff',
@@ -197,9 +340,25 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   avatarIcon: { fontSize: 28 },
-  studentName: { fontSize: 14, fontWeight: '600', textAlign: 'center' , alignSelf: 'center'},
-  studentSubtitle: { fontSize: 12, color: '#666', textAlign: 'center', marginTop: 4 , alignSelf: 'center'},
-  studentMeta: { fontSize: 12, color: '#333', marginTop: 8, textAlign: 'center' },
+  studentName: {
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    alignSelf: 'center',
+  },
+  studentSubtitle: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 4,
+    alignSelf: 'center',
+  },
+  studentMeta: {
+    fontSize: 12,
+    color: '#333',
+    marginTop: 8,
+    textAlign: 'center',
+  },
   fab: {
     position: 'absolute',
     bottom: 18,
@@ -227,8 +386,31 @@ const styles = StyleSheet.create({
   modalTitle: { fontSize: 18, fontWeight: '700', textAlign: 'center' },
   modalName: { fontSize: 16, fontWeight: '700', marginTop: 8 },
   modalText: { fontSize: 14, marginTop: 6 },
-  modalActions: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 },
-  modalButton: { flex: 1, padding: 12, borderRadius: 8, alignItems: 'center', marginHorizontal: 6 },
+  modalActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 16,
+  },
+  modalButton: {
+    flex: 1,
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginHorizontal: 6,
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  itemSubtitle: {
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  itemMeta: {
+    fontSize: 12,
+    marginBottom: 2,
+  },
 });
 
 export default StudentDetails;

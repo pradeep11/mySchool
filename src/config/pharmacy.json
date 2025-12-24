@@ -1,0 +1,185 @@
+{
+  "vendor": {
+    "id": "pharmacy",
+    "name": "HealthPlus Pharmacy",
+    "type": "pharmacy",
+    "theme": {
+      "primary": "#2E8B57",
+      "secondary": "#32CD32",
+      "background": "#F0FFF0",
+      "surface": "#FFFFFF",
+      "text": "#2F4F4F",
+      "textSecondary": "#696969",
+      "border": "#D3D3D3",
+      "error": "#DC143C",
+      "success": "#228B22"
+    }
+  },
+  "tabs": [
+    {
+      "id": "home",
+      "label": "Home",
+      "icon": "🏠",
+      "screen": "home"
+    },
+    {
+      "id": "updates",
+      "label": "Alerts",
+      "icon": "🔔",
+      "screen": "updates"
+    },
+    {
+      "id": "inventory",
+      "label": "Inventory",
+      "icon": "💊",
+      "screen": "details"
+    },
+    {
+      "id": "store",
+      "label": "Store",
+      "icon": "🏪",
+      "screen": "info"
+    }
+  ],
+  "screens": {
+    "home": {
+      "title": "Dashboard",
+      "organisationName": "HealthPlus Pharmacy",
+      "adminName": "Pharmacist Johnson",
+      "quickAccessItems": [
+        { "id": "1", "label": "Prescription Check", "icon": "📋" },
+        { "id": "2", "label": "Medicine Search", "icon": "🔍" },
+        { "id": "3", "label": "Health Tips", "icon": "💡" },
+        { "id": "4", "label": "Emergency Contact", "icon": "🚑" },
+        { "id": "5", "label": "Store Hours", "icon": "🕐" },
+        { "id": "6", "label": "Online Orders", "icon": "🛒" }
+      ]
+    },
+    "updates": {
+      "title": "Health Alerts & Updates",
+      "updates": [
+        {
+          "id": "1",
+          "title": "New Vaccine Available",
+          "date": "2025-12-22",
+          "description": "COVID-19 booster shots now available. Schedule your appointment today.",
+          "icon": "💉"
+        },
+        {
+          "id": "2",
+          "title": "Medication Recall Notice",
+          "date": "2025-12-20",
+          "description": "Important: Certain blood pressure medications are being recalled. Please check with us.",
+          "icon": "⚠️"
+        },
+        {
+          "id": "3",
+          "title": "Flu Season Alert",
+          "date": "2025-12-18",
+          "description": "Flu vaccines are in high demand. Limited stock available - call ahead.",
+          "icon": "🤒"
+        }
+      ]
+    },
+    "details": {
+      "title": "Medicine Inventory",
+      "itemLabel": "Medicines",
+      "items": [
+        {
+          "id": "1",
+          "name": "Paracetamol 500mg",
+          "category": "Pain Relief",
+          "stock": "150 tablets",
+          "price": "$5.99",
+          "prescription": false
+        },
+        {
+          "id": "2",
+          "name": "Amoxicillin 250mg",
+          "category": "Antibiotic",
+          "stock": "75 capsules",
+          "price": "$12.50",
+          "prescription": true
+        },
+        {
+          "id": "3",
+          "name": "Vitamin D3 1000IU",
+          "category": "Supplements",
+          "stock": "200 capsules",
+          "price": "$8.99",
+          "prescription": false
+        },
+        {
+          "id": "4",
+          "name": "Blood Pressure Monitor",
+          "category": "Medical Devices",
+          "stock": "25 units",
+          "price": "$45.00",
+          "prescription": false
+        },
+        {
+          "id": "5",
+          "name": "Insulin Injection",
+          "category": "Diabetes Care",
+          "stock": "50 vials",
+          "price": "$85.00",
+          "prescription": true
+        }
+      ]
+    },
+    "info": {
+      "title": "Store Information",
+      "name": "HealthPlus Pharmacy",
+      "address": "123 Health Street, Medical District, MD 12345",
+      "phone": "+1 (555) 123-4567",
+      "email": "info@healthpluspharmacy.com",
+      "website": "www.healthpluspharmacy.com",
+      "manager": "Dr. Sarah Johnson, RPh",
+      "established": "2015",
+      "totalItems": "2,500+",
+      "staff": "12",
+      "services": [
+        { "name": "Prescription Filling", "icon": "💊", "description": "Fast and accurate prescription services" },
+        { "name": "Health Consultations", "icon": "👩‍⚕️", "description": "Consult with licensed pharmacists" },
+        { "name": "Vaccinations", "icon": "💉", "description": "Flu shots and other immunizations" },
+        { "name": "Home Delivery", "icon": "🚚", "description": "Convenient delivery service" },
+        { "name": "Health Screenings", "icon": "🩺", "description": "Blood pressure and diabetes checks" },
+        { "name": "Compounding", "icon": "⚗️", "description": "Custom medication compounding" }
+      ]
+    }
+  },
+  "drawer": {
+    "menuItems": [
+      {
+        "id": "home",
+        "label": "Home",
+        "screen": "home",
+        "icon": "🏠"
+      },
+      {
+        "id": "updates",
+        "label": "Alerts",
+        "screen": "updates",
+        "icon": "🔔"
+      },
+      {
+        "id": "inventory",
+        "label": "Inventory",
+        "screen": "details",
+        "icon": "💊"
+      },
+      {
+        "id": "store",
+        "label": "Store Info",
+        "screen": "info",
+        "icon": "🏪"
+      },
+      {
+        "id": "logout",
+        "label": "Logout",
+        "action": "logout",
+        "icon": "🚪"
+      }
+    ]
+  }
+}

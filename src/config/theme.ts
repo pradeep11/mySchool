@@ -1,3 +1,5 @@
+import { configService } from '../services/ConfigService';
+
 export enum ThemeType {
   LIGHT = 'light',
   DARK = 'dark',
@@ -65,46 +67,30 @@ const baseTheme: Omit<Theme, 'type' | 'colors'> = {
   },
 };
 
-const lightColors: Colors = {
-  primary: '#2196F3',
-  secondary: '#FFC107',
-  background: '#F5F5F5',
-  surface: '#FFFFFF',
-  text: '#000000',
-  textSecondary: '#666666',
-  border: '#E0E0E0',
-  accent: '#FF6B6B',
-  error: '#F44336',
-  success: '#4CAF50',
-  warning: '#FF9800',
-};
-
-const darkColors: Colors = {
-  primary: '#4CAF50',
-  secondary: '#FFC107',
-  background: '#1a1a1a',
-  surface: '#2a2a2a',
-  text: '#FFFFFF',
-  textSecondary: '#AAAAAA',
-  border: '#404040',
-  accent: '#FF6B6B',
-  error: '#EF5350',
-  success: '#66BB6A',
-  warning: '#FFA726',
-};
-
-export const lightTheme: Theme = {
-  type: ThemeType.LIGHT,
-  colors: lightColors,
-  ...baseTheme,
-};
-
-export const darkTheme: Theme = {
-  type: ThemeType.DARK,
-  colors: darkColors,
-  ...baseTheme,
+const getVendorColors = (): Colors => {
+  const vendorTheme = configService.getTheme();
+  return {
+    primary: vendorTheme.primary,
+    secondary: vendorTheme.secondary,
+    background: vendorTheme.background,
+    surface: vendorTheme.surface,
+    text: vendorTheme.text,
+    textSecondary: vendorTheme.textSecondary,
+    border: vendorTheme.border,
+    accent: vendorTheme.secondary, // Using secondary as accent
+    error: vendorTheme.error,
+    success: vendorTheme.success,
+    warning: vendorTheme.secondary, // Using secondary as warning
+  };
 };
 
 export const getTheme = (isDarkMode: boolean): Theme => {
-  return isDarkMode ? darkTheme : lightTheme;
+  // For now, we'll use the vendor's theme regardless of dark/light mode
+  // In the future, you could extend the config to have separate light/dark themes per vendor
+  const colors = getVendorColors();
+  return {
+    type: isDarkMode ? ThemeType.DARK : ThemeType.LIGHT,
+    colors,
+    ...baseTheme,
+  };
 };

@@ -5,14 +5,14 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Image,
   useColorScheme,
   FlatList,
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTheme } from '../config/theme';
-import { useAppContext } from '../context/AppContext';
+import { useAppStore } from '../store/appStore';
+import { configService } from '../services/ConfigService';
 
 interface QuickAccessItem {
   id: string;
@@ -20,34 +20,20 @@ interface QuickAccessItem {
   icon: string;
 }
 
-const QUICK_ACCESS_ITEMS: QuickAccessItem[] = [
-  { id: '1', label: 'Home', icon: '🏠' },
-  { id: '2', label: 'Updates', icon: '📋' },
-  { id: '3', label: 'Attendance', icon: '📊' },
-  { id: '4', label: 'Approvals', icon: '🏢' },
-  { id: '5', label: 'Sprouts Content', icon: '💻' },
-  { id: '6', label: 'Search Content', icon: '🔍' },
-  { id: '7', label: 'U&I', icon: '👨‍🎓' },
-  { id: '8', label: 'Homework', icon: '📚' },
-  { id: '9', label: 'Student Details', icon: '👤' },
-  { id: '10', label: 'Events', icon: '📅' },
-  { id: '11', label: 'News letter', icon: '📰' },
-  { id: '12', label: 'Gallery', icon: '🖼️' },
-  { id: '13', label: 'Diary', icon: '📔' },
-  { id: '14', label: 'Fee', icon: '💳' },
-  { id: '15', label: 'Examination', icon: '📝' },
-  { id: '16', label: 'Enquiry', icon: '❓' },
-  { id: '17', label: 'Income', icon: '💰' },
-  { id: '18', label: 'Notice', icon: '📢' },
-  { id: '19', label: 'Expense', icon: '💸' },
-  { id: '20', label: 'eDoc', icon: '📄' },
-];
-
 const HomeScreen: React.FC = () => {
-  const { navigate, logout } = useAppContext();
+  const { navigate, toggleDrawer } = useAppStore();
   const isDarkMode = useColorScheme() === 'dark';
   const theme = getTheme(isDarkMode);
-  const [selectedYear, setSelectedYear] = useState('2025-2026');
+  const [selectedYear] = useState('2025-2026');
+
+  const homeData = configService.getScreenData('home') as {
+    title: string;
+    organisationName: string;
+    adminName: string;
+    quickAccessItems: QuickAccessItem[];
+  };
+  console.log('[HomeScreen] Home Data:', homeData);
+  const QUICK_ACCESS_ITEMS = homeData.quickAccessItems;
 
   const screenWidth = Dimensions.get('window').width;
   const itemWidth = (screenWidth - 48) / 2; // 48 for padding/margins
@@ -55,7 +41,7 @@ const HomeScreen: React.FC = () => {
   const renderQuickAccessItem = ({ item }: { item: QuickAccessItem }) => {
     const onPress = () => {
       if (item.label === 'Student Details') {
-        navigate('studentDetails');
+        navigate('details');
         return;
       }
       // placeholder for other actions
@@ -89,28 +75,50 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       {/* Header */}
+
+      <View
+        style={[
+          styles.header,
+          {
+            flexDirection: 'row',
+            backgroundColor: theme.colors.primary,
+            alignItems: 'center',
+            paddingTop: 16,
+            paddingBottom: 10,
+          },
+        ]}
+      >
+        <View>
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={toggleDrawer}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.menuIcon}>☰</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.schoolName}>{homeData.organisationName}</Text>
+      </View>
       <View style={[styles.header, { backgroundColor: theme.colors.primary }]}>
+        {/* Menu Icon */}
+
         <View style={styles.profileSection}>
           {/* Profile Avatar */}
+
           <View style={styles.avatarContainer}>
             <Text style={{ fontSize: 28 }}>👨‍💼</Text>
           </View>
 
           {/* Profile Info */}
           <View style={styles.profileInfo}>
-            <Text style={styles.schoolName}>Admin school</Text>
+            <Text style={styles.schoolName}>{homeData.adminName}</Text>
             <Text style={styles.role}>Admin</Text>
           </View>
-
-          {/* Logout Button */}
-          <TouchableOpacity
-            style={[styles.logoutButton, { backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}
-            onPress={logout}
-          >
-            <Text style={{ fontSize: 18 }}>⊗</Text>
-          </TouchableOpacity>
         </View>
 
         {/* Year Selector */}
@@ -151,7 +159,7 @@ const HomeScreen: React.FC = () => {
           <FlatList
             data={QUICK_ACCESS_ITEMS}
             renderItem={renderQuickAccessItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             numColumns={2}
             columnWrapperStyle={styles.columnWrapper}
             scrollEnabled={false}
@@ -169,6 +177,20 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 16,
     paddingVertical: 16,
+  },
+  menuButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+    marginRight: 12,
+  },
+  menuIcon: {
+    fontSize: 20,
+    color: '#FFFFFF',
   },
   profileSection: {
     flexDirection: 'row',

@@ -1,20 +1,20 @@
 {
-  "root": "/Users/pradeep/ReactNative/mySchool",
-  "reactNativePath": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native",
+  "root": "/Users/pradeep/Documents/GitHub/mySchool",
+  "reactNativePath": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native",
   "reactNativeVersion": "0.82",
   "dependencies": {
     "react-native-safe-area-context": {
-      "root": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context",
+      "root": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native-safe-area-context",
       "name": "react-native-safe-area-context",
       "platforms": {
         "ios": {
-          "podspecPath": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec",
+          "podspecPath": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec",
           "version": "5.6.2",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android",
+          "sourceDir": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native-safe-area-context/android",
           "packageImportPath": "import com.th3rdwave.safeareacontext.SafeAreaContextPackage;",
           "packageInstance": "new SafeAreaContextPackage()",
           "buildTypes": [],
@@ -23,7 +23,7 @@
             "RNCSafeAreaProviderComponentDescriptor",
             "RNCSafeAreaViewComponentDescriptor"
           ],
-          "cmakeListsPath": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -32,22 +32,22 @@
       }
     },
     "react-native-vector-icons": {
-      "root": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native-vector-icons",
+      "root": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native-vector-icons",
       "name": "react-native-vector-icons",
       "platforms": {
         "ios": {
-          "podspecPath": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native-vector-icons/RNVectorIcons.podspec",
+          "podspecPath": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native-vector-icons/RNVectorIcons.podspec",
           "version": "9.2.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native-vector-icons/android",
+          "sourceDir": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native-vector-icons/android",
           "packageImportPath": "import com.oblador.vectoricons.VectorIconsPackage;",
           "packageInstance": "new VectorIconsPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "/Users/pradeep/ReactNative/mySchool/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/pradeep/Documents/GitHub/mySchool/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -218,7 +218,7 @@
         {
           "name": "--path <path>",
           "description": "Path to the React Native project root.",
-          "default": "/Users/pradeep/ReactNative/mySchool"
+          "default": "/Users/pradeep/Documents/GitHub/mySchool"
         },
         {
           "name": "--platform <string>",
@@ -518,7 +518,7 @@
   "assets": [],
   "project": {
     "ios": {
-      "sourceDir": "/Users/pradeep/ReactNative/mySchool/ios",
+      "sourceDir": "/Users/pradeep/Documents/GitHub/mySchool/ios",
       "xcodeProject": {
         "name": "mySchool.xcodeproj",
         "path": ".",
@@ -527,7 +527,7 @@
       "assets": []
     },
     "android": {
-      "sourceDir": "/Users/pradeep/ReactNative/mySchool/android",
+      "sourceDir": "/Users/pradeep/Documents/GitHub/mySchool/android",
       "appName": "app",
       "packageName": "com.myschool",
       "applicationId": "com.myschool",

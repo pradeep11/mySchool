@@ -1,0 +1,150 @@
+{
+  "vendor": {
+    "id": "sunshine",
+    "name": "Sunshine International School",
+    "type": "school",
+    "theme": {
+      "primary": "#FF6B35",
+      "secondary": "#F7931E",
+      "background": "#FFF8F0",
+      "surface": "#FFFFFF",
+      "text": "#2D3748",
+      "textSecondary": "#718096",
+      "border": "#E2E8F0",
+      "error": "#E53E3E",
+      "success": "#38A169"
+    }
+  },
+  "tabs": [
+    {
+      "id": "home",
+      "label": "Home",
+      "icon": "🏠",
+      "screen": "home"
+    },
+    {
+      "id": "updates",
+      "label": "News",
+      "icon": "📰",
+      "screen": "updates"
+    },
+    {
+      "id": "students",
+      "label": "Students",
+      "icon": "👨‍🎓",
+      "screen": "details"
+    },
+    {
+      "id": "school",
+      "label": "About",
+      "icon": "🏫",
+      "screen": "info"
+    }
+  ],
+  "screens": {
+    "home": {
+      "title": "Dashboard",
+      "organisationName": "Sunshine International School",
+      "adminName": "Principal Johnson",
+      "quickAccessItems": [
+        { "id": "1", "label": "Daily Report", icon: "📊" },
+        { "id": "2", "label": "Announcements", icon: "📢" },
+        { "id": "3", "label": "Calendar", icon: "📅" },
+        { "id": "4", "label": "Messages", icon: "💬" },
+        { "id": "5", "label": "Assignments", icon: "📝" },
+        { "id": "6", "label": "Grades", icon: "🎓" }
+      ]
+    },
+    "updates": {
+      "title": "School News",
+      "updates": [
+        {
+          "id": "1",
+          "title": "Welcome Back Event",
+          "date": "2025-12-22",
+          "description": "Join us for our annual welcome back celebration with games and refreshments.",
+          "icon": "🎉"
+        },
+        {
+          "id": "2",
+          "title": "Winter Uniform Policy",
+          "date": "2025-12-20",
+          "description": "New winter uniform guidelines effective from January 1st, 2026.",
+          "icon": "🧥"
+        }
+      ]
+    },
+    "details": {
+      "title": "Student Directory",
+      "itemLabel": "Students",
+      "items": [
+        {
+          "id": "1",
+          "name": "Emma Wilson",
+          "parent": "David Wilson",
+          "classSection": "Grade 1 - A",
+          "admissionNo": "SIS2025001"
+        },
+        {
+          "id": "2",
+          "name": "Liam Chen",
+          "parent": "Sarah Chen",
+          "classSection": "Grade 1 - A",
+          "admissionNo": "SIS2025002"
+        }
+      ]
+    },
+    "info": {
+      "title": "About Our School",
+      "name": "Sunshine International School",
+      "address": "456 Sunshine Boulevard, Bright City, BC 67890",
+      "phone": "+1 (555) 987-6543",
+      "email": "info@sunshine.edu",
+      "website": "www.sunshine.edu",
+      "manager": "Dr. Maria Johnson",
+      "established": "2010",
+      "totalItems": "850",
+      "staff": "65",
+      "facilities": [
+        { "name": "Smart Classrooms", "icon": "💻", "description": "Technology-enabled learning spaces" },
+        { "name": "Sports Complex", "icon": "⚽", "description": "Multi-purpose sports facilities" },
+        { "name": "Art Studio", "icon": "🎨", "description": "Creative arts and crafts center" },
+        { "name": "Music Room", "icon": "🎵", "description": "Music education and practice facilities" }
+      ]
+    }
+  },
+  "drawer": {
+    "menuItems": [
+      {
+        "id": "home",
+        "label": "Home",
+        "screen": "home",
+        "icon": "🏠"
+      },
+      {
+        "id": "updates",
+        "label": "News",
+        "screen": "updates",
+        "icon": "📰"
+      },
+      {
+        "id": "studentDetails",
+        "label": "Students",
+        "screen": "details",
+        "icon": "👨‍🎓"
+      },
+      {
+        "id": "schoolInfo",
+        "label": "About School",
+        "screen": "info",
+        "icon": "🏫"
+      },
+      {
+        "id": "logout",
+        "label": "Logout",
+        "action": "logout",
+        "icon": "🚪"
+      }
+    ]
+  }
+}

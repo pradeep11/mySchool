@@ -1,1 +1,0 @@
-/Users/pradeep/ReactNative/mySchool/android/app/build/intermediates/cxx/Debug/4k73651y/obj/x86_64

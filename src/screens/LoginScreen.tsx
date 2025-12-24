@@ -12,16 +12,28 @@ import {
   ScrollView,
   Keyboard,
   TouchableWithoutFeedback,
+  Modal,
+  FlatList,
 } from 'react-native';
 import { getTheme } from '../config/theme';
-import { useAppContext } from '../context/AppContext';
+import { useAppStore } from '../store/appStore';
+import { switchVendor, configService } from '../services/ConfigService';
 
 const LoginScreen: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedConfig, setSelectedConfig] = useState('myschool');
+  const [showConfigModal, setShowConfigModal] = useState(false);
   const isDarkMode = useColorScheme() === 'dark';
   const theme = getTheme(isDarkMode);
-  const { login } = useAppContext();
+  const { login } = useAppStore();
+
+  // Available configurations
+  const configOptions = [
+    { id: 'myschool', name: 'mySchool Academy', type: 'School' },
+    { id: 'sunshine', name: 'Sunshine International School', type: 'School' },
+    { id: 'pharmacy', name: 'HealthPlus Pharmacy', type: 'Pharmacy' },
+  ];
 
   // Test credentials
   const TEST_USERNAME = 'test';
@@ -39,10 +51,26 @@ const LoginScreen: React.FC = () => {
       login();
       setUsername('');
       setPassword('');
-      Alert.alert('Success', 'Login successful!');
+      Alert.alert(
+        'Success',
+        `Login successful! Using ${
+          configOptions.find(c => c.id === selectedConfig)?.name
+        }`,
+      );
     } else {
       Alert.alert('Error', 'Invalid username or password');
     }
+  };
+
+  const handleConfigSelect = (configId: string) => {
+    setSelectedConfig(configId);
+    setShowConfigModal(false);
+    // Switch vendor configuration before login
+    switchVendor(configId);
+  };
+
+  const homeData = configService.getScreenData('home') as {
+    organisationName: string;
   };
 
   return (
@@ -56,22 +84,38 @@ const LoginScreen: React.FC = () => {
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
         >
-          <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+          <View
+            style={[
+              styles.container,
+              { backgroundColor: theme.colors.background },
+            ]}
+          >
             {/* Logo */}
             <View style={styles.logoContainer}>
-              <View style={[styles.logoPlaceholder, { backgroundColor: theme.colors.primary }]}>
+              <View
+                style={[
+                  styles.logoPlaceholder,
+                  { backgroundColor: theme.colors.primary },
+                ]}
+              >
                 <Text style={{ fontSize: 48 }}>📚</Text>
               </View>
-              <Text style={[styles.appTitle, { color: theme.colors.text }]}>mySchool</Text>
+              <Text style={[styles.appTitle, { color: theme.colors.text }]}>
+                {homeData.organisationName}
+              </Text>
             </View>
 
             {/* Login Form */}
             <View style={styles.formContainer}>
-              <Text style={[styles.welcomeText, { color: theme.colors.text }]}>Welcome Back</Text>
+              <Text style={[styles.welcomeText, { color: theme.colors.text }]}>
+                Welcome Back
+              </Text>
 
               {/* Username Input */}
               <View style={styles.inputContainer}>
-                <Text style={[styles.label, { color: theme.colors.text }]}>Username</Text>
+                <Text style={[styles.label, { color: theme.colors.text }]}>
+                  Username
+                </Text>
                 <TextInput
                   style={[
                     styles.input,
@@ -91,7 +135,9 @@ const LoginScreen: React.FC = () => {
 
               {/* Password Input */}
               <View style={styles.inputContainer}>
-                <Text style={[styles.label, { color: theme.colors.text }]}>Password</Text>
+                <Text style={[styles.label, { color: theme.colors.text }]}>
+                  Password
+                </Text>
                 <TextInput
                   style={[
                     styles.input,
@@ -110,14 +156,45 @@ const LoginScreen: React.FC = () => {
               </View>
 
               {/* Test Credentials Helper Text */}
-              <Text style={[styles.helperText, { color: theme.colors.textSecondary }]}>
+              <Text
+                style={[
+                  styles.helperText,
+                  { color: theme.colors.textSecondary },
+                ]}
+              >
                 Test: username: <Text style={styles.bold}>test</Text>, password:{' '}
                 <Text style={styles.bold}>test</Text>
               </Text>
 
+              {/* Config Selector */}
+              <View style={styles.inputContainer}>
+                <Text style={[styles.label, { color: theme.colors.text }]}>
+                  Configuration
+                </Text>
+                <TouchableOpacity
+                  style={[
+                    styles.input,
+                    {
+                      backgroundColor: theme.colors.surface,
+                      borderColor: theme.colors.border,
+                      justifyContent: 'center',
+                    },
+                  ]}
+                  onPress={() => setShowConfigModal(true)}
+                >
+                  <Text style={{ color: theme.colors.text }}>
+                    {configOptions.find(c => c.id === selectedConfig)?.name} (
+                    {configOptions.find(c => c.id === selectedConfig)?.type})
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               {/* Login Button */}
               <TouchableOpacity
-                style={[styles.loginButton, { backgroundColor: theme.colors.primary }]}
+                style={[
+                  styles.loginButton,
+                  { backgroundColor: theme.colors.primary },
+                ]}
                 onPress={handleLogin}
               >
                 <Text style={styles.loginButtonText}>Login</Text>
@@ -126,9 +203,93 @@ const LoginScreen: React.FC = () => {
 
             {/* Footer */}
             <View style={styles.footer}>
-              <Text style={[styles.footerText, { color: theme.colors.textSecondary }]}>v1.0.0</Text>
+              <Text
+                style={[
+                  styles.footerText,
+                  { color: theme.colors.textSecondary },
+                ]}
+              >
+                v1.0.0
+              </Text>
             </View>
           </View>
+
+          {/* Config Selection Modal */}
+          <Modal
+            visible={showConfigModal}
+            transparent={true}
+            animationType="slide"
+            onRequestClose={() => setShowConfigModal(false)}
+          >
+            <View style={styles.modalOverlay}>
+              <View
+                style={[
+                  styles.modalContent,
+                  { backgroundColor: theme.colors.surface },
+                ]}
+              >
+                <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
+                  Select Configuration
+                </Text>
+
+                <FlatList
+                  data={configOptions}
+                  keyExtractor={item => item.id}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={[
+                        styles.configOption,
+                        {
+                          backgroundColor:
+                            selectedConfig === item.id
+                              ? theme.colors.primary + '20'
+                              : 'transparent',
+                          borderColor: theme.colors.border,
+                        },
+                      ]}
+                      onPress={() => handleConfigSelect(item.id)}
+                    >
+                      <View style={styles.configOptionContent}>
+                        <Text
+                          style={[
+                            styles.configName,
+                            { color: theme.colors.text },
+                          ]}
+                        >
+                          {item.name}
+                        </Text>
+                        <Text
+                          style={[
+                            styles.configType,
+                            { color: theme.colors.textSecondary },
+                          ]}
+                        >
+                          {item.type}
+                        </Text>
+                      </View>
+                      {selectedConfig === item.id && (
+                        <Text
+                          style={{ color: theme.colors.primary, fontSize: 18 }}
+                        >
+                          ✓
+                        </Text>
+                      )}
+                    </TouchableOpacity>
+                  )}
+                />
+
+                <TouchableOpacity
+                  style={[
+                    styles.closeButton,
+                    { backgroundColor: theme.colors.primary },
+                  ]}
+                  onPress={() => setShowConfigModal(false)}
+                >
+                  <Text style={styles.closeButtonText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -213,6 +374,54 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 12,
     opacity: 0.6,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '80%',
+    maxHeight: '60%',
+    borderRadius: 12,
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  configOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  configOptionContent: {
+    flex: 1,
+  },
+  configName: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  configType: {
+    fontSize: 12,
+  },
+  closeButton: {
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  closeButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 

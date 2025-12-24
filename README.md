@@ -1,6 +1,78 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# mySchool - Vendor-Configurable App
 
-# Getting Started
+A React Native application that can be configured for different types of businesses (schools, pharmacies, retail stores) through JSON configuration files.
+
+## Features
+
+- **Vendor-Configurable**: Easily customize the app for different businesses by swapping JSON configuration files
+- **Dynamic Theming**: Theme colors, navigation, and content loaded from configuration
+- **Multi-Vendor Support**: Currently supports schools and pharmacies
+- **Type-Safe Configuration**: Full TypeScript support for configuration validation
+
+## Supported Vendors
+
+### Schools
+
+- `myschool.json` - Default school configuration
+- `sunshine.json` - Alternative school configuration
+
+### Pharmacies
+
+- `pharmacy.json` - HealthPlus Pharmacy configuration
+
+## Configuration Selector
+
+For testing purposes, the login screen includes a configuration dropdown that allows you to select between different vendor configurations:
+
+- **mySchool Academy** (School) - Default school configuration
+- **Sunshine International School** (School) - Alternative school configuration
+- **HealthPlus Pharmacy** (Pharmacy) - Pharmacy configuration
+
+Simply select your desired configuration from the dropdown before logging in. The app will dynamically load the selected vendor's theme, content, and navigation.
+
+## Screen Adaptations
+
+The app automatically adapts its screens based on the vendor type:
+
+### Schools
+
+- **Details Screen**: Shows student information (name, parent, class, admission number)
+- **Info Screen**: Shows school information (facilities, principal, student count)
+
+### Pharmacies
+
+- **Details Screen**: Shows medicine inventory (name, category, stock, price, prescription status)
+- **Info Screen**: Shows store information (services, manager, item count)
+
+## How to Switch Vendors Programmatically
+
+To switch between different vendor configurations programmatically:
+
+````typescript
+import { switchVendor } from './src/services/ConfigService';
+
+// Switch to pharmacy configuration
+switchVendor('pharmacy');
+
+// Switch to school configuration
+switchVendor('myschool');
+```## Configuration Structure
+
+Each vendor configuration includes:
+
+- **Vendor Info**: Name, type, theme colors
+- **Navigation**: Tabs and drawer menu items
+- **Screens**: Home dashboard, updates/alerts, details/inventory, info/store information
+- **Content**: All text, icons, and data specific to the vendor
+
+## Adding New Vendors
+
+1. Create a new JSON file in `src/config/` following the existing structure
+2. Add the vendor `type` field (`school`, `pharmacy`, or `retail`)
+3. Customize theme colors, content, and navigation
+4. Update the ConfigService import to load your configuration
+
+## Getting Started
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
@@ -16,7 +88,7 @@ npm start
 
 # OR using Yarn
 yarn start
-```
+````
 
 ## Step 2: Build and run your app
 

@@ -1,1 +1,0 @@
-/Users/pradeep/ReactNative/mySchool/android/app/build/intermediates/cxx/RelWithDebInfo/126z5a40/obj/arm64-v8a

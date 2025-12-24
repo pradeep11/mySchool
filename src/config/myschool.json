@@ -1,0 +1,205 @@
+{
+  "vendor": {
+    "id": "myschool",
+    "name": "mySchool Academy",
+    "type": "school",
+    "theme": {
+      "primary": "#4A90E2",
+      "secondary": "#F5A623",
+      "background": "#FFFFFF",
+      "surface": "#F8F9FA",
+      "text": "#333333",
+      "textSecondary": "#666666",
+      "border": "#E1E5E9",
+      "error": "#E74C3C",
+      "success": "#27AE60"
+    }
+  },
+  "tabs": [
+    {
+      "id": "home",
+      "label": "Home",
+      "icon": "🏠",
+      "screen": "home"
+    },
+    {
+      "id": "updates",
+      "label": "Updates",
+      "icon": "📋",
+      "screen": "updates"
+    },
+    {
+      "id": "students",
+      "label": "Students",
+      "icon": "👤",
+      "screen": "details"
+    },
+    {
+      "id": "school",
+      "label": "School",
+      "icon": "🏫",
+      "screen": "info"
+    }
+  ],
+  "screens": {
+    "home": {
+      "title": "Dashboard",
+      "organisationName": "mySchool Academy",
+      "adminName": "Admin User",
+      "quickAccessItems": [
+        { "id": "1", "label": "Home", "icon": "🏠" },
+        { "id": "2", "label": "Updates", "icon": "📋" },
+        { "id": "3", "label": "Attendance", "icon": "📊" },
+        { "id": "4", "label": "Approvals", "icon": "🏢" },
+        { "id": "5", "label": "Sprouts Content", "icon": "💻" },
+        { "id": "6", "label": "Search Content", "icon": "🔍" },
+        { "id": "7", "label": "U&I", "icon": "👨‍🎓" },
+        { "id": "8", "label": "Homework", "icon": "📚" },
+        { "id": "9", "label": "Student Details", "icon": "👤" },
+        { "id": "10", "label": "Events", "icon": "📅" },
+        { "id": "11", "label": "News letter", "icon": "📰" },
+        { "id": "12", "label": "Gallery", "icon": "🖼️" },
+        { "id": "13", "label": "Diary", "icon": "📔" },
+        { "id": "14", "label": "Fee", "icon": "💳" },
+        { "id": "15", "label": "Examination", "icon": "📝" },
+        { "id": "16", "label": "Enquiry", "icon": "❓" },
+        { "id": "17", "label": "Income", "icon": "💰" },
+        { "id": "18", "label": "Notice", "icon": "📢" },
+        { "id": "19", "label": "Expense", "icon": "💸" },
+        { "id": "20", "label": "eDoc", "icon": "📄" }
+      ]
+    },
+    "updates": {
+      "title": "Updates",
+      "updates": [
+        {
+          "id": "1",
+          "title": "New School Policy Update",
+          "date": "2025-12-20",
+          "description": "Important changes to school attendance policy effective January 2026.",
+          "icon": "📋"
+        },
+        {
+          "id": "2",
+          "title": "Holiday Schedule",
+          "date": "2025-12-18",
+          "description": "Winter break schedule and important dates for the upcoming holidays.",
+          "icon": "🎄"
+        },
+        {
+          "id": "3",
+          "title": "Parent-Teacher Meeting",
+          "date": "2025-12-15",
+          "description": "PTM scheduled for December 25th. Please confirm your attendance.",
+          "icon": "👨‍👩‍👧‍👦"
+        },
+        {
+          "id": "4",
+          "title": "Sports Day Announcement",
+          "date": "2025-12-10",
+          "description": "Annual sports day will be held on January 15th, 2026.",
+          "icon": "🏆"
+        }
+      ]
+    },
+    "details": {
+      "title": "Student Details",
+      "itemLabel": "Students",
+      "items": [
+        {
+          "id": "1",
+          "name": "Aarnav Radhu",
+          "parent": "Vaibhav Radhu",
+          "classSection": "Play Group - A",
+          "admissionNo": "408766"
+        },
+        {
+          "id": "2",
+          "name": "Vikkrant Gambhir",
+          "parent": "Gautam Gambhir",
+          "classSection": "Play Group - A",
+          "admissionNo": "4"
+        },
+        {
+          "id": "3",
+          "name": "Viyom",
+          "parent": "",
+          "classSection": "Play Group - A",
+          "admissionNo": ""
+        }
+      ]
+    },
+    "info": {
+      "title": "School Information",
+      "name": "mySchool Academy",
+      "address": "123 Education Street, Knowledge City, KC 12345",
+      "phone": "+1 (555) 123-4567",
+      "email": "info@myschool.edu",
+      "website": "www.myschool.edu",
+      "manager": "Dr. Sarah Johnson",
+      "established": "1995",
+      "totalItems": "1,250",
+      "staff": "85",
+      "facilities": [
+        { "name": "Library", "icon": "📚", "description": "Well-stocked library with 50,000+ books" },
+        { "name": "Sports Complex", "icon": "🏟️", "description": "Basketball court, swimming pool, and gymnasium" },
+        { "name": "Science Labs", "icon": "🔬", "description": "Modern physics, chemistry, and biology labs" },
+        { "name": "Computer Lab", "icon": "💻", "description": "Latest computers with high-speed internet" },
+        { "name": "Auditorium", "icon": "🎭", "description": "500-seat auditorium for events and performances" },
+        { "name": "Cafeteria", "icon": "🍽️", "description": "Nutritious meals prepared daily" }
+      ]
+    }
+  },
+  "drawer": {
+    "menuItems": [
+      {
+        "id": "home",
+        "label": "Home",
+        "screen": "home",
+        "icon": "🏠"
+      },
+      {
+        "id": "updates",
+        "label": "Updates",
+        "screen": "updates",
+        "icon": "📋"
+      },
+      {
+        "id": "studentDetails",
+        "label": "Student Details",
+        "screen": "details",
+        "icon": "👤"
+      },
+      {
+        "id": "schoolInfo",
+        "label": "School Info",
+        "screen": "info",
+        "icon": "🏫"
+      },
+      {
+        "id": "help&Support",
+        "label": "Help & Support",
+        "screen": "help&Support",
+        "icon": "❓"
+      },
+      {
+        "id": "settings&Privacy",
+        "label": "Settings & Privacy",
+        "screen": "settings&Privacy",
+        "icon": "⚙️"
+      },
+      {
+        "id": "appVersion",
+        "label": "App Version: 1.0.0",
+        "screen": "appVersion",
+        "icon": "📱"
+      },
+      {
+        "id": "logout",
+        "label": "Logout",
+        "action": "logout",
+        "icon": "🚪"
+      }
+    ]
+  }
+}
