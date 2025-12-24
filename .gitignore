@@ -179,3 +179,9 @@ fix_*.patch
 
 /packages/debugger-shell/build/
 /packages/*/dist/
+
+# Android build artifacts
+**/.cxx/
+**/build/
+*.apk
+*.aab
