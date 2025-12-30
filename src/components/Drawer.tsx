@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,14 @@ import {
   Dimensions,
   Animated,
   useColorScheme,
+  ScrollView,
+  FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTheme } from '../config/theme';
 import { useAppStore } from '../store/appStore';
 import { configService } from '../services/ConfigService';
+import QuickAccessItemComponent from './QuickAccessItem';
 
 const { width } = Dimensions.get('window');
 const DRAWER_WIDTH = width * 0.8; // Half screen width
@@ -19,6 +22,7 @@ const DRAWER_WIDTH = width * 0.8; // Half screen width
 const Drawer: React.FC = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const theme = getTheme(isDarkMode);
+  const [isQuickAccessExpanded, setIsQuickAccessExpanded] = useState(false);
   const {
     drawerOpen,
     closeDrawer,
@@ -35,6 +39,7 @@ const Drawer: React.FC = () => {
 
   const homeData = configService.getScreenData('home') as {
     adminName: string;
+    quickAccessItems: Array<{ id: string; label: string; icon: string }>;
   };
 
   const handleMenuPress = (item: (typeof menuItems)[0]) => {
@@ -47,6 +52,20 @@ const Drawer: React.FC = () => {
     }
     closeDrawer();
   };
+
+  const handleQuickAccessPress = (item: {
+    id: string;
+    label: string;
+    icon: string;
+  }) => {
+    if (item.label === 'Student Details') {
+      navigate('details');
+    }
+    // Add other actions as needed
+    closeDrawer();
+  };
+
+  const drawerItemWidth = (DRAWER_WIDTH - 48) / 2; // 48 for padding/margins
 
   if (!drawerOpen) return null;
 
@@ -72,32 +91,76 @@ const Drawer: React.FC = () => {
             </Text>
           </View>
 
-          <View style={styles.menuItems}>
-            {menuItems.map(item => (
+          <ScrollView
+            style={styles.contentScrollView}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.menuItems}>
+              {menuItems.map(item => (
+                <TouchableOpacity
+                  key={item.id}
+                  style={[
+                    styles.menuItem,
+                    currentScreen === item.screen && styles.activeMenuItem,
+                  ]}
+                  onPress={() => handleMenuPress(item)}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.menuIcon}>{item.icon}</Text>
+                  <Text
+                    style={[
+                      styles.menuLabel,
+                      { color: theme.colors.text },
+                      currentScreen === item.screen && {
+                        color: theme.colors.primary,
+                      },
+                    ]}
+                  >
+                    {item.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Quick Access Section */}
+            <View style={styles.quickAccessSection}>
               <TouchableOpacity
-                key={item.id}
-                style={[
-                  styles.menuItem,
-                  currentScreen === item.screen && styles.activeMenuItem,
-                ]}
-                onPress={() => handleMenuPress(item)}
+                style={styles.quickAccessHeader}
+                onPress={() => setIsQuickAccessExpanded(!isQuickAccessExpanded)}
                 activeOpacity={0.7}
               >
-                <Text style={styles.menuIcon}>{item.icon}</Text>
                 <Text
                   style={[
-                    styles.menuLabel,
+                    styles.quickAccessTitle,
                     { color: theme.colors.text },
-                    currentScreen === item.screen && {
-                      color: theme.colors.primary,
-                    },
                   ]}
                 >
-                  {item.label}
+                  Quick Access
+                </Text>
+                <Text style={[styles.expandIcon, { color: theme.colors.text }]}>
+                  {isQuickAccessExpanded ? '▼' : '▶'}
                 </Text>
               </TouchableOpacity>
-            ))}
-          </View>
+              {isQuickAccessExpanded && (
+                <FlatList
+                  data={homeData.quickAccessItems}
+                  renderItem={({ item }) => (
+                    <QuickAccessItemComponent
+                      item={item}
+                      itemWidth={drawerItemWidth}
+                      onPress={() => handleQuickAccessPress(item)}
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                  keyExtractor={item => item.id}
+                  numColumns={2}
+                  columnWrapperStyle={styles.columnWrapper}
+                  scrollEnabled={false}
+                  contentContainerStyle={styles.quickAccessList}
+                />
+              )}
+            </View>
+          </ScrollView>
         </SafeAreaView>
       </Animated.View>
     </>
@@ -145,8 +208,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
-  menuItems: {
+  contentScrollView: {
     flex: 1,
+  },
+  menuItems: {
     paddingTop: 20,
   },
   menuItem: {
@@ -167,6 +232,32 @@ const styles = StyleSheet.create({
   menuLabel: {
     fontSize: 16,
     fontWeight: '500',
+  },
+  quickAccessSection: {
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0, 0, 0, 0.1)',
+    marginTop: 20,
+  },
+  quickAccessHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  quickAccessTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  expandIcon: {
+    fontSize: 16,
+  },
+  quickAccessList: {
+    paddingHorizontal: 16,
+  },
+  columnWrapper: {
+    justifyContent: 'space-between',
+    marginBottom: 16,
   },
 });
 

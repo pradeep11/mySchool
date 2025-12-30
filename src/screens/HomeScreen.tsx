@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { getTheme } from '../config/theme';
 import { useAppStore } from '../store/appStore';
 import { configService } from '../services/ConfigService';
+import QuickAccessItemComponent from '../components/QuickAccessItem';
 
 interface QuickAccessItem {
   id: string;
@@ -38,40 +39,12 @@ const HomeScreen: React.FC = () => {
   const screenWidth = Dimensions.get('window').width;
   const itemWidth = (screenWidth - 48) / 2; // 48 for padding/margins
 
-  const renderQuickAccessItem = ({ item }: { item: QuickAccessItem }) => {
-    const onPress = () => {
-      if (item.label === 'Student Details') {
-        navigate('details');
-        return;
-      }
-      // placeholder for other actions
-    };
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={[
-          styles.quickAccessItem,
-          {
-            width: itemWidth,
-            backgroundColor: theme.colors.surface,
-            borderColor: theme.colors.border,
-          },
-        ]}
-        activeOpacity={0.8}
-      >
-        <Text style={{ fontSize: 36, marginBottom: 8 }}>{item.icon}</Text>
-        <Text
-          style={[
-            styles.itemLabel,
-            {
-              color: theme.colors.text,
-            },
-          ]}
-        >
-          {item.label}
-        </Text>
-      </TouchableOpacity>
-    );
+  const getOnPressForItem = (item: QuickAccessItem) => () => {
+    if (item.label === 'Student Details') {
+      navigate('details');
+      return;
+    }
+    // placeholder for other actions
   };
 
   return (
@@ -158,7 +131,14 @@ const HomeScreen: React.FC = () => {
 
           <FlatList
             data={QUICK_ACCESS_ITEMS}
-            renderItem={renderQuickAccessItem}
+            renderItem={({ item }) => (
+              <QuickAccessItemComponent
+                item={item}
+                itemWidth={itemWidth}
+                onPress={getOnPressForItem(item)}
+                isDarkMode={isDarkMode}
+              />
+            )}
             keyExtractor={item => item.id}
             numColumns={2}
             columnWrapperStyle={styles.columnWrapper}
@@ -270,23 +250,6 @@ const styles = StyleSheet.create({
   columnWrapper: {
     justifyContent: 'space-between',
     marginBottom: 16,
-  },
-  quickAccessItem: {
-    borderRadius: 12,
-    borderWidth: 1,
-    padding: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 120,
-  },
-  itemIcon: {
-    fontSize: 40,
-    marginBottom: 8,
-  },
-  itemLabel: {
-    fontSize: 13,
-    fontWeight: '500',
-    textAlign: 'center',
   },
 });
 
